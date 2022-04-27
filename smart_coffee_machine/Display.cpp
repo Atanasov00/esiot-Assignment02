@@ -15,6 +15,6 @@ void Display::initialize(){
 }
 
 void Display::print(String msg, int col, int row){
-    lcd.SetCursor(col, row);
+    lcd.setCursor(col, row);
     lcd.print(msg);
 }

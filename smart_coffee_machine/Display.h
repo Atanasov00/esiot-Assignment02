@@ -12,7 +12,7 @@ class Display{
 
     private:
         String pinSda, pinScl;
-        LiquidCrystal_I2C lcd
+        LiquidCrystal_I2C lcd;
 };
 
 #endif
