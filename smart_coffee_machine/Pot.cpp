@@ -1,7 +1,7 @@
 #include "Pot.h"
 #include "Arduino.h"
 
-Potentiometer::(int pin){
+Potentiometer::Potentiometer(int pin){
     this->pin = pin;
 }
 
