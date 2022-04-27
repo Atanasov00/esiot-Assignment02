@@ -5,7 +5,7 @@
 
 class Pir: public PresenceSensor {
     public:
-        Pir(int pin)
+        Pir(int pin);
         bool isDetected();
         void calibrate();
 
