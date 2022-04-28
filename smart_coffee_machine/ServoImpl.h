@@ -20,4 +20,4 @@ class ServoImpl: public ServoMotor {
   ServoTimer2 motor;
 };
 
-#endif;
+#endif

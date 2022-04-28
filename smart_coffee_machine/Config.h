@@ -29,3 +29,5 @@
 //Temperature expressed in °C
 #define TEMP_MIN 17
 #define TEMP_MAX 24
+
+#endif
