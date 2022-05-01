@@ -3,9 +3,7 @@
 #include <LiquidCrystal_I2C.h> 
 
 
-Display::Display(String sda, String scl){
-    this->pinSda = sda;
-    this->pinScl = scl;
+Display::Display(){
     //this->lcd = LiquidCrystal_I2C(0x27, 20, 4);
 }
 
