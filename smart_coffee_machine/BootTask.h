@@ -8,7 +8,7 @@
 class BootTask: public Task {
 
     public:
-        BootTask(Display* plcd);
+        BootTask(Display* lcd);
         void init();
         void tick();
         
