@@ -10,35 +10,41 @@ SelectionTask::SelectionTask(Display* plcd):lcd(plcd){
 }
 
 void SelectionTask::bUpPressed(){
-  switch(currentDrink){
-    case Coffee:{
-      currentDrink = Tea;
+  switch(currentSelection){
+    case 0:{
+      currentDrink = "Tea";
+      currentSelection = 1;
     }
       
      break;
-     case Tea:{
-      currentDrink = Chocolate;
+     case 1:{
+      currentDrink = "Chocolate";
+      currentSelection = 2;
     }
      break;
-     case Chocolate:{
-      currentDrink = Coffee;
+     case 2:{
+      currentDrink = "Coffee";
+      currentSelection = 0;
     }
      break;
   }
 }
 
 void SelectionTask::bDownPressed(){ 
-  switch(currentDrink){
-    case Coffee:{
-      currentDrink = Chocolate;
+  switch(currentSelection){
+    case 0:{
+      currentDrink = "Chocolate";
+      currentSelection = 2;
     }
      break;
-     case Tea:{
-      currentDrink = Coffee;
+     case 1:{
+      currentDrink = "Coffee";
+      currentSelection = 0;
     }
      break;
-     case Chocolate:{
-      currentDrink = Tea;
+     case 2:{
+      currentDrink = "Tea";
+      currentSelection = 1;
     }
      break;
   }
@@ -50,13 +56,13 @@ void SelectionTask::init(){
   bMake = new ButtonImpl(BMAKE_PIN);
   pot = new Potentiometer(POT_PIN);
   startTime = millis();
-  currentDrink = Coffee;
+  currentSelection = 0;
+  currentDrink = "Coffee";
 }
 
 void SelectionTask::tick(){
   switch(state){
     case READY:{
-      Serial.println("Task 2");
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
       if(bUp->isPressed()){
@@ -80,6 +86,13 @@ void SelectionTask::tick(){
       actualTime = millis();
       if(actualTime - time >= T_TIMEOUT){
         state = READY;
+      }
+      if(bUp->isPressed()){
+        bUpPressed();
+        state = SELECTION;
+      } else if(bDown->isPressed()){
+        bDownPressed();
+        state = SELECTION;
       }
     }
     break;

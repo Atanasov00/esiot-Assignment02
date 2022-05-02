@@ -18,12 +18,9 @@ class SelectionTask: public Task {
         
 
     private:
-        enum {SELECTION, READY, WAITING, SUGAR_SELECTION, START_MAKE, ASSISTANCE} state;
-        
-        enum drinks {Coffee, Tea, Chocolate};
-        
 
-        
+        enum {SELECTION, READY, WAITING, SUGAR_SELECTION, START_MAKE, ASSISTANCE} state;        
+
         void bUpPressed();
         void bDownPressed();
 
@@ -38,7 +35,8 @@ class SelectionTask: public Task {
         Button* bDown;
         Button* bMake;
         Potentiometer* pot;
-        drinks currentDrink;
+        int currentSelection;
+        String currentDrink;
   
 };
 
