@@ -40,6 +40,17 @@ void SelectionTask::bUpPressed(){
   }
 }
 
+void SelectionTask::checkIfPotChanged(){
+  if(pot->getValue() != sugarValue){
+    potChanged();
+    state = SUGAR_SELECTION;
+  }
+}
+
+void SelectionTask::potChanged(){
+  sugarValue = pot->getValue();
+}
+
 void SelectionTask::bDownPressed(){ 
   switch(currentSelection){
     case 0:{
@@ -68,20 +79,29 @@ void SelectionTask::init(){
   startTime = millis();
   currentSelection = 0;
   currentDrink = "Coffee";
+  sugarValue = pot->getValue();
 }
 
 void SelectionTask::tick(){
   switch(state){
     case READY:{
+      Serial.println(pot->getValue());
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();
+      checkIfPotChanged();
     }
     break;
     case SELECTION:{
       lcd->getLcd().clear();
       lcd->print(String(currentDrink), 2, 1);
-      Serial.println("Selecting");
+      time = millis();
+      state = WAITING;
+    }
+    break;
+    case SUGAR_SELECTION:{
+      lcd->getLcd().clear();
+      lcd->print("Sugar level: " + String(sugarValue), 2, 1);
       time = millis();
       state = WAITING;
     }
@@ -92,6 +112,7 @@ void SelectionTask::tick(){
         state = READY;
       }
       checkIfAnyButtonPressed();
+      checkIfPotChanged();
     }
     break;
   }

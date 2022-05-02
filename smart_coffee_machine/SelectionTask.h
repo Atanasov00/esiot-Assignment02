@@ -24,6 +24,8 @@ class SelectionTask: public Task {
         void bUpPressed();
         void bDownPressed();
         void checkIfAnyButtonPressed();
+        void checkIfPotChanged();
+        void potChanged();
 
         long time;
         long actualTime;
@@ -38,6 +40,7 @@ class SelectionTask: public Task {
         Potentiometer* pot;
         int currentSelection;
         String currentDrink;
+        int sugarValue;
   
 };
 
