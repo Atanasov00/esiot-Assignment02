@@ -9,6 +9,16 @@ SelectionTask::SelectionTask(Display* plcd):lcd(plcd){
   state = READY;
 }
 
+void SelectionTask::checkIfAnyButtonPressed(){
+  if(bUp->isPressed()){
+    bUpPressed();
+    state = SELECTION;
+  } else if(bDown->isPressed()){
+    bDownPressed();
+    state = SELECTION;
+  }
+}
+
 void SelectionTask::bUpPressed(){
   switch(currentSelection){
     case 0:{
@@ -65,13 +75,7 @@ void SelectionTask::tick(){
     case READY:{
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
-      if(bUp->isPressed()){
-        bUpPressed();
-        state = SELECTION;
-      } else if(bDown->isPressed()){
-        bDownPressed();
-        state = SELECTION;
-      }
+      checkIfAnyButtonPressed();
     }
     break;
     case SELECTION:{
@@ -87,13 +91,7 @@ void SelectionTask::tick(){
       if(actualTime - time >= T_TIMEOUT){
         state = READY;
       }
-      if(bUp->isPressed()){
-        bUpPressed();
-        state = SELECTION;
-      } else if(bDown->isPressed()){
-        bDownPressed();
-        state = SELECTION;
-      }
+      checkIfAnyButtonPressed();
     }
     break;
   }

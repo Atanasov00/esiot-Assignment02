@@ -23,6 +23,7 @@ class SelectionTask: public Task {
 
         void bUpPressed();
         void bDownPressed();
+        void checkIfAnyButtonPressed();
 
         long time;
         long actualTime;
