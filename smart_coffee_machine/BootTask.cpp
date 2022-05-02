@@ -2,7 +2,7 @@
 #include "Arduino.h"
 #include "Config.h"
 
-BootTask::BootTask(Display* plcd): lcd(plcd){
+BootTask::BootTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask){
     state = WELCOME;
 }
 
@@ -31,6 +31,14 @@ void BootTask::tick(){
         case READY: {
             lcd->getLcd().clear();
             lcd->print("Ready", 2, 1);
+            selectionTask->setActive(true);
+            //Serial.println(selectionTask->isActive());
+            state = COMPLETED;
         }
+        break;
+        case COMPLETED: {
+            this->setCompleted();
+        }
+        break;
     }
 }

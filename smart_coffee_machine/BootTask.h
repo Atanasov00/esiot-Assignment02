@@ -8,13 +8,13 @@
 class BootTask: public Task {
 
     public:
-        BootTask(Display* lcd);
+        BootTask(Display* lcd, Task* selectionTask);
         void init();
         void tick();
         
     private:
 
-        enum {WELCOME, INITIALIZATION, READY} state;
+        enum {WELCOME, INITIALIZATION, READY, COMPLETED} state;
 
         long time;
         long startTime;
@@ -22,6 +22,7 @@ class BootTask: public Task {
         int coffeeQuantity;
         int teaQuantity;
         int chocolateQuantity;
+        Task* selectionTask;
 
 };
 

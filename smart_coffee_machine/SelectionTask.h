@@ -4,6 +4,9 @@
 #include "Task.h"
 #include "Display.h"
 #include <LiquidCrystal_I2C.h>
+#include "Button.h"
+#include "Pot.h"
+#include "Config.h"
 
 class SelectionTask: public Task {
 
@@ -12,16 +15,30 @@ class SelectionTask: public Task {
         void init();
         void tick();
 
+        
+
     private:
-        enum {SELECTION, READY, SUGAR_SELECTION, START_MAKE, ASSISTANCE} state;
-        enum {COFFEE = "Coffee", TEA = "Tea", CHOCOLATE = "Chocolate"} drinks;
+        enum {SELECTION, READY, WAITING, SUGAR_SELECTION, START_MAKE, ASSISTANCE} state;
+        
+        enum drinks {Coffee, Tea, Chocolate};
+        
+
+        
+        void bUpPressed();
+        void bDownPressed();
 
         long time;
+        long actualTime;
         long startTime;
         Display* lcd;
         int coffeeQuantity;
         int teaQuantity;
         int chocolateQuantity;
+        Button* bUp;
+        Button* bDown;
+        Button* bMake;
+        Potentiometer* pot;
+        drinks currentDrink;
   
 };
 

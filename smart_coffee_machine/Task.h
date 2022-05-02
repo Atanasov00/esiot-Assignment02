@@ -8,6 +8,7 @@ class Task {
   int myPeriod;
   int timeElapsed;
   bool active;
+  bool completed;
 
   public:
 
@@ -37,6 +38,15 @@ class Task {
 
   bool isActive(){
     return active;
+  }
+
+  void setCompleted(){
+    completed = true;
+    active = false;
+  }
+
+  bool isCompleted(){
+    return completed;
   }
 
   virtual void setActive(bool active){
