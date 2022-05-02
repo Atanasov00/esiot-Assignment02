@@ -16,6 +16,6 @@ class BootTask: public Task {
 
         Display* lcd;
 
-}
+};
 
 #endif
