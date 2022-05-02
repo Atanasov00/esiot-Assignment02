@@ -7,7 +7,9 @@ Scheduler scheduler;
 void setup() {
   scheduler.init(50);
 
+  Serial.begin(9600);
   Display* lcd = new Display();
+  
   Task* bootTask = new BootTask(lcd);
 
   //Add tasks here

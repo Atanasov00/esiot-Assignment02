@@ -9,7 +9,9 @@ BootTask::BootTask(Display* plcd): lcd(plcd){
 void BootTask::tick(){
     switch(state){
         case WELCOME: {
+            lcd->initialize();
             lcd->print("Prova", 2, 1);
+            //Serial.println("Prova");
         }
         break;
     }
