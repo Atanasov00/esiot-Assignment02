@@ -20,6 +20,8 @@ class Task {
       timeElapsed = 0;
       active = true;
     }
+
+    virtual void init(){}
     
     virtual void tick() = 0;
     

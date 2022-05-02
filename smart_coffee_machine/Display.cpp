@@ -16,3 +16,7 @@ void Display::print(String msg, int col, int row){
     lcd.setCursor(col, row);
     lcd.print(msg);
 }
+
+LiquidCrystal_I2C Display::getLcd(){
+  return lcd;
+}
