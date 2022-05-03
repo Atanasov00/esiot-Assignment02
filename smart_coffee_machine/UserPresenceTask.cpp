@@ -2,13 +2,17 @@
 #include "Arduino.h"
 #include "Config.h"
 #include "Pir.h"
-#include <EnableInterrupt.h>
 #include <avr/sleep.h>
+#include <EnableInterrupt.h>
 
-
-UserPresenceTask::UserPresenceTask(Display* plcd): lcd(plcd){
+UserPresenceTask::UserPresenceTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask) {
   state = IDLE;
   pir = new Pir(PIR_PIN);
+}
+
+
+void wakeUp(){
+  
 }
 
 void UserPresenceTask:: init(){
@@ -37,7 +41,19 @@ void UserPresenceTask::tick(){
     }
     break;
     case SLEEP: {
-      
+        selectionTask->setActive(false);
+        lcd->getLcd().noDisplay();
+        enableInterrupt(PIR_PIN, wakeUp, RISING);
+        set_sleep_mode(SLEEP_MODE_PWR_DOWN);
+        sleep_enable();
+        sleep_mode();
+        Serial.println("Wake up");
+        sleep_disable();
+        disableInterrupt(PIR_PIN);
+        lcd->getLcd().display();
+        selectionTask->setActive(true);
+        Serial.println("Going active");
+        state = ACTIVE;
     }
   }
 }
