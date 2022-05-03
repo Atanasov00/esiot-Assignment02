@@ -22,8 +22,7 @@ void UserPresenceTask::tick(){
   switch(state){
     case IDLE: {
       time = millis();
-      Serial.println(time - startTime);
-      if(!pir->isDetected() && time - startTime >= 5000){
+      if(!pir->isDetected() && time - startTime >= T_IDLE){
         Serial.println("Going to sleep");
         state = SLEEP;
       } else if(pir->isDetected()){
@@ -42,6 +41,7 @@ void UserPresenceTask::tick(){
     break;
     case SLEEP: {
         selectionTask->setActive(false);
+        lcd->getLcd().clear();
         lcd->getLcd().noBacklight();
         attachInterrupt(digitalPinToInterrupt(PIR_PIN), wakeUp, RISING);
         set_sleep_mode(SLEEP_MODE_PWR_DOWN);
