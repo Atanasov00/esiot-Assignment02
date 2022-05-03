@@ -17,8 +17,8 @@ class UserPresenceTask: public Task {
         enum {ACTIVE, IDLE, SLEEP} state;
 
 
-        long startTime;
-        long time;
+        unsigned long startTime;
+        unsigned long time;
         Display* lcd;
         Pir* pir;
         Task* selectionTask;

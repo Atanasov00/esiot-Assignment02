@@ -1,7 +1,7 @@
 #ifndef __CONFIG__
 #define __CONFIG__
 
-#define BUP_PIN 2
+#define BUP_PIN 5
 #define BDOWN_PIN 3
 #define BMAKE_PIN 4
 
@@ -12,7 +12,7 @@
 #define DISPLAY_SDA_PIN A4
 #define DISPLAY_SCL_PIN A5
 
-#define PIR_PIN 5
+#define PIR_PIN 2
 
 #define SONAR_TRIG_PIN 12
 #define SONAR_ECHO PIN 13

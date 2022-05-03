@@ -8,7 +8,7 @@
 class BootTask: public Task {
 
     public:
-        BootTask(Display* lcd, Task* selectionTask);
+        BootTask(Display* lcd, Task* selectionTask, Task* userPresenceTask);
         void init();
         void tick();
         
@@ -23,6 +23,7 @@ class BootTask: public Task {
         int teaQuantity;
         int chocolateQuantity;
         Task* selectionTask;
+        Task* userPresenceTask;
 
 };
 

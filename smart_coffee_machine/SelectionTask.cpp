@@ -3,7 +3,6 @@
 #include "ButtonImpl.h"
 #include "Config.h"
 #include "Pot.h"
-#include <EnableInterrupt.h>
 
 SelectionTask::SelectionTask(Display* plcd):lcd(plcd){
   state = READY;
@@ -85,7 +84,6 @@ void SelectionTask::init(){
 void SelectionTask::tick(){
   switch(state){
     case READY:{
-      Serial.println(pot->getValue());
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();
