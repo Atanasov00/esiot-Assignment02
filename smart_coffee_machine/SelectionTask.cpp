@@ -130,7 +130,6 @@ void SelectionTask::tick(){
       Serial.println("time to start");
       makingTask->setActive(true);
       userPresenceTask->setActive(false);
-      this->setCompleted();
       state = ASSISTANCE;
     }
     break;

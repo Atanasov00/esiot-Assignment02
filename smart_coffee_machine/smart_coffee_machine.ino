@@ -12,20 +12,17 @@ Task* makingTask;
 Task* userPresenceTask;
 Task* bootTask; 
 
-
-
 void setup() {
   scheduler.init(50);
 
   Serial.begin(9600);
   Display* lcd = new Display();
 
-
-  selectionTask = new SelectionTask(lcd, makingTask, userPresenceTask);
-  selectionTask->init();
-  
   makingTask = new MakingTask(lcd, selectionTask);
   makingTask->init();
+  
+  selectionTask = new SelectionTask(lcd, makingTask, userPresenceTask);
+  selectionTask->init();
 
   userPresenceTask = new UserPresenceTask(lcd, selectionTask);
   userPresenceTask->init();
@@ -34,8 +31,6 @@ void setup() {
   bootTask->init();
   bootTask->setActive(true);
 
-  
-  
   //Add tasks here
   scheduler.addTask(bootTask);
   scheduler.addTask(selectionTask);
