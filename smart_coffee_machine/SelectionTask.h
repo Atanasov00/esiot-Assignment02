@@ -11,7 +11,7 @@
 class SelectionTask: public Task {
 
     public:
-        SelectionTask(Display* lcd);
+        SelectionTask(Display* lcd, Task* makingTask, Task* userPresenceTask);
         void init();
         void tick();
 
@@ -41,6 +41,9 @@ class SelectionTask: public Task {
         int currentSelection;
         String currentDrink;
         int sugarValue;
+        Task* makingTask;
+        Task* userPresenceTask;
+        String drinkSelected;
   
 };
 

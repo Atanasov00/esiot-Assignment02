@@ -3,12 +3,19 @@
 #include "BootTask.h"
 #include "SelectionTask.h"
 #include "UserPresenceTask.h"
+#include "MakingTask.h"
 
 Scheduler scheduler;
 
 extern int coffeeQuantity;
 extern int teaQuantity;
 extern int chocolateQuantity;
+extern String drinkSelected;
+
+Task* selectionTask;
+Task* makingTask;
+Task* userPresenceTask;
+Task* bootTask; 
 
 void setup() {
   scheduler.init(50);
@@ -16,20 +23,26 @@ void setup() {
   Serial.begin(9600);
   Display* lcd = new Display();
 
-  Task* selectionTask = new SelectionTask(lcd);
+  makingTask = new MakingTask(lcd);
+  makingTask->init();
+  
+  selectionTask = new SelectionTask(lcd, makingTask, userPresenceTask);
   selectionTask->init();
 
-  Task* userPresenceTask = new UserPresenceTask(lcd, selectionTask);
+  userPresenceTask = new UserPresenceTask(lcd, selectionTask);
   userPresenceTask->init();
 
-  Task* bootTask = new BootTask(lcd, selectionTask, userPresenceTask);
+  bootTask = new BootTask(lcd, selectionTask, userPresenceTask);
   bootTask->init();
   bootTask->setActive(true);
+
+  
   
   //Add tasks here
   scheduler.addTask(bootTask);
   scheduler.addTask(selectionTask);
   scheduler.addTask(userPresenceTask);
+  scheduler.addTask(makingTask);
 }
 
 void loop() {

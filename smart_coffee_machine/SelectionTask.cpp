@@ -4,7 +4,7 @@
 #include "Config.h"
 #include "Pot.h"
 
-SelectionTask::SelectionTask(Display* plcd):lcd(plcd){
+SelectionTask::SelectionTask(Display* plcd, Task* mTask, Task* pTask): lcd(plcd), makingTask(mTask), userPresenceTask(pTask) {
   state = READY;
 }
 
@@ -88,6 +88,10 @@ void SelectionTask::tick(){
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();
       checkIfPotChanged();
+      if(bMake->isPressed()){
+        state = START_MAKE;
+        Serial.println("Start making");
+      }
     }
     break;
     case SELECTION:{
@@ -113,5 +117,12 @@ void SelectionTask::tick(){
       checkIfPotChanged();
     }
     break;
+    case START_MAKE: {
+      drinkSelected = currentDrink;
+      makingTask->setActive(true);
+      Serial.println("Switch task");
+      userPresenceTask->setActive(false);
+      this->setActive(false);   
+    }
   }
 }
