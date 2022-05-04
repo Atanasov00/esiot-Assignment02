@@ -20,7 +20,6 @@ class Task {
     virtual void init(int period) {
       myPeriod = period;  
       timeElapsed = 0;
-      active = true;
     }
 
     virtual void init(){}

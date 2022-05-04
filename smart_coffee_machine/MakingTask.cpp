@@ -14,7 +14,8 @@ MakingTask::MakingTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTa
 void MakingTask:: init() {
     servo = new ServoImpl(SERVO_PIN);
     pos = 0;
-    startTime = millis();
+    servo->on();
+    servo->setPosition(0);
 }
 
 void MakingTask::tick() {
@@ -26,6 +27,7 @@ void MakingTask::tick() {
       lcd->print("Making a coffee", 2, 1);
       servo->on();
       state = MAKING;
+      startTime = millis();
     }
     break;
     case MAKING: {
@@ -34,13 +36,15 @@ void MakingTask::tick() {
         pos = map(progress, 0, T_MAKING, 0, 180);
         servo->setPosition(pos);
       } else{
+        servo->off();
         state = READY;
       }
     }
     break;
     case READY: {
       lcd->getLcd().clear();
-      lcd->print("The coffee is ready", 2 ,1);
+      lcd->print("The coffee is ready", 1 , 1);
+      this->setCompleted();
     }
   }
 }

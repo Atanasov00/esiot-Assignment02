@@ -124,18 +124,16 @@ void SelectionTask::tick(){
       }
       checkIfAnyButtonPressed();
       checkIfPotChanged();
+      checkIfMakingPressed();
     }
     break;
     case START_MAKE: {
-      Serial.println("time to start");
+      //userPresenceTask->setActive(false);
       makingTask->setActive(true);
-      userPresenceTask->setActive(false);
-      state = ASSISTANCE;
+      this->setCompleted();
     }
     break;
-    case ASSISTANCE:{
-      
-    }
+    case ASSISTANCE:
     break;
   }
 }
