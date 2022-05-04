@@ -8,6 +8,8 @@ extern Drink* coffee;
 extern Drink* tea;
 extern Drink* chocolate;
 
+String currentDrink;
+
 SelectionTask::SelectionTask(Display* plcd, Task* mTask, Task* pTask): lcd(plcd), makingTask(mTask), userPresenceTask(pTask) {
   state = READY;
 }
@@ -95,7 +97,7 @@ void SelectionTask::init(){
 void SelectionTask::tick(){
   switch(state){
     case READY:{
-      Serial.println("ready");
+      //Serial.println("ready");
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();

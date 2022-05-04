@@ -41,7 +41,6 @@ class SelectionTask: public Task {
         Button* bMake;
         Potentiometer* pot;
         int currentSelection;
-        String currentDrink;
         int sugarValue;
         Task* makingTask;
         Task* userPresenceTask;  

@@ -24,7 +24,7 @@ class MakingTask: public Task {
        unsigned long progress;
        int pos; 
        Task* selectionTask;
-       String currentDrink;
+
 };
 
 #endif
