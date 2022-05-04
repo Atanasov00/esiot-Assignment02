@@ -7,6 +7,9 @@
 #include "Button.h"
 #include "Pot.h"
 #include "Config.h"
+#include "Drink.h"
+#include "BootTask.h"
+#include "Arduino.h"
 
 class SelectionTask: public Task {
 
@@ -42,6 +45,7 @@ class SelectionTask: public Task {
         int sugarValue;
         Task* makingTask;
         Task* userPresenceTask;  
+        
 };
 
 #endif

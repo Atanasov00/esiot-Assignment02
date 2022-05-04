@@ -4,6 +4,8 @@
 #include "Task.h"
 #include "Display.h"
 #include <LiquidCrystal_I2C.h>
+#include "Drink.h"
+#include "Arduino.h"
 
 class BootTask: public Task {
 
@@ -24,6 +26,9 @@ class BootTask: public Task {
         int chocolateQuantity;
         Task* selectionTask;
         Task* userPresenceTask;
+        Drink* coffee;
+        Drink* chocolate;
+        Drink* tea;
 
 };
 

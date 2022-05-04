@@ -4,6 +4,8 @@
 #include "Config.h"
 #include "Display.h"
 
+extern String currentDrink;
+
 MakingTask::MakingTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask){
   state = INITIALIZATION;
 }
@@ -17,8 +19,9 @@ void MakingTask:: init() {
 void MakingTask::tick() {
   switch(state) {
     case INITIALIZATION: {
+      Serial.println("MAKING TASK");
       lcd->getLcd().clear();
-      lcd->print("Making a " + String(), 2, 1);
+      lcd->print("Making a " + String(currentDrink), 2, 1);
       servo->on();
       state = MAKING;
     }
@@ -35,7 +38,7 @@ void MakingTask::tick() {
     break;
     case READY: {
       lcd->getLcd().clear();
-      lcd->print("The " + String() + " is ready", 2 ,1);
+      lcd->print("The " + String(currentDrink) + " is ready", 2 ,1);
     }
   }
 }

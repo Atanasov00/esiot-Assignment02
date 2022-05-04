@@ -1,6 +1,9 @@
 #include "BootTask.h"
 #include "Arduino.h"
 #include "Config.h"
+#include "Coffee.h"
+#include "Tea.h"
+#include "Chocolate.h"
 
 BootTask::BootTask(Display* plcd, Task* sTask, Task* pTask): lcd(plcd), selectionTask(sTask), userPresenceTask(pTask){
     state = WELCOME;
@@ -8,6 +11,10 @@ BootTask::BootTask(Display* plcd, Task* sTask, Task* pTask): lcd(plcd), selectio
 
 void BootTask::init(){
   startTime = millis();
+  chocolate = new Chocolate();
+  tea = new Tea();
+  coffee = new Coffee();
+
 }
 
 void BootTask::tick(){
@@ -32,6 +39,7 @@ void BootTask::tick(){
             lcd->getLcd().clear();
             lcd->print("Ready", 2, 1);
             selectionTask->setActive(true);
+            Serial.println("BOOT");
             userPresenceTask->setActive(true);
             //Serial.println(selectionTask->isActive());
             state = COMPLETED;

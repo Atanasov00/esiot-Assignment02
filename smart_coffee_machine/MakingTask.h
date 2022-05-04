@@ -23,8 +23,8 @@ class MakingTask: public Task {
        unsigned long startTime;
        unsigned long progress;
        int pos; 
-       String drinkSelected;
        Task* selectionTask;
+       String currentDrink;
 };
 
 #endif
