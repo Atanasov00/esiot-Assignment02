@@ -70,6 +70,13 @@ void SelectionTask::bDownPressed(){
   }
 }
 
+void SelectionTask::checkIfMakingPressed(){
+  if(bMake->isPressed()){
+    state = START_MAKE;
+    Serial.println("Start making");
+  }
+}
+
 void SelectionTask::init(){
   bUp = new ButtonImpl(BUP_PIN);
   bDown = new ButtonImpl(BDOWN_PIN);
@@ -88,10 +95,7 @@ void SelectionTask::tick(){
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();
       checkIfPotChanged();
-      if(bMake->isPressed()){
-        state = START_MAKE;
-        Serial.println("Start making");
-      }
+      checkIfMakingPressed();
     }
     break;
     case SELECTION:{
@@ -118,11 +122,14 @@ void SelectionTask::tick(){
     }
     break;
     case START_MAKE: {
-      drinkSelected = currentDrink;
       makingTask->setActive(true);
-      Serial.println("Switch task");
       userPresenceTask->setActive(false);
-      this->setActive(false);   
+      state = ASSISTANCE;
     }
+    break;
+    case ASSISTANCE:{
+      
+    }
+    break;
   }
 }

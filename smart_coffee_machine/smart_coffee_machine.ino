@@ -7,11 +7,6 @@
 
 Scheduler scheduler;
 
-extern int coffeeQuantity;
-extern int teaQuantity;
-extern int chocolateQuantity;
-extern String drinkSelected;
-
 Task* selectionTask;
 Task* makingTask;
 Task* userPresenceTask;
@@ -23,11 +18,11 @@ void setup() {
   Serial.begin(9600);
   Display* lcd = new Display();
 
-  makingTask = new MakingTask(lcd);
-  makingTask->init();
-  
   selectionTask = new SelectionTask(lcd, makingTask, userPresenceTask);
   selectionTask->init();
+  
+  makingTask = new MakingTask(lcd, selectionTask);
+  makingTask->init();
 
   userPresenceTask = new UserPresenceTask(lcd, selectionTask);
   userPresenceTask->init();

@@ -4,7 +4,7 @@
 #include "Config.h"
 #include "Display.h"
 
-MakingTask::MakingTask(Display* plcd): lcd(plcd) {
+MakingTask::MakingTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask){
   state = INITIALIZATION;
 }
 
@@ -18,7 +18,7 @@ void MakingTask::tick() {
   switch(state) {
     case INITIALIZATION: {
       lcd->getLcd().clear();
-      lcd->print("Making " + String(drinkSelected), 2, 1);
+      lcd->print("Making a " + String(), 2, 1);
       servo->on();
       state = MAKING;
     }
@@ -35,7 +35,7 @@ void MakingTask::tick() {
     break;
     case READY: {
       lcd->getLcd().clear();
-      lcd->print("The " + String(drinkSelected) + " is ready", 2 ,1);
+      lcd->print("The " + String() + " is ready", 2 ,1);
     }
   }
 }

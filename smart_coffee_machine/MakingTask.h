@@ -5,11 +5,12 @@
 #include "Display.h"
 #include <LiquidCrystal_I2C.h>
 #include "Task.h"
+#include "SelectionTask.h"
 
 class MakingTask: public Task {
 
     public:
-        MakingTask(Display* lcd);
+        MakingTask(Display* lcd, Task* selectionTask);
         void init();
         void tick();
 
@@ -23,6 +24,7 @@ class MakingTask: public Task {
        unsigned long progress;
        int pos; 
        String drinkSelected;
+       Task* selectionTask;
 };
 
 #endif

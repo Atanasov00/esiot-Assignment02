@@ -13,9 +13,7 @@ class SelectionTask: public Task {
     public:
         SelectionTask(Display* lcd, Task* makingTask, Task* userPresenceTask);
         void init();
-        void tick();
-
-        
+        void tick();        
 
     private:
 
@@ -25,6 +23,7 @@ class SelectionTask: public Task {
         void bDownPressed();
         void checkIfAnyButtonPressed();
         void checkIfPotChanged();
+        void checkIfMakingPressed();
         void potChanged();
 
         long time;
@@ -42,9 +41,7 @@ class SelectionTask: public Task {
         String currentDrink;
         int sugarValue;
         Task* makingTask;
-        Task* userPresenceTask;
-        String drinkSelected;
-  
+        Task* userPresenceTask;  
 };
 
 #endif
