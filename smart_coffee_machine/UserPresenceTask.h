@@ -9,20 +9,16 @@
 class UserPresenceTask: public Task {
 
     public:
-        UserPresenceTask(Display* lcd, Task* selectionTask);
+        UserPresenceTask(Display* lcd);
         void init();
         void tick();
 
     private:
         enum {ACTIVE, IDLE, SLEEP} state;
-
-
         unsigned long startTime;
         unsigned long time;
         Display* lcd;
-        Pir* pir;
-        Task* selectionTask;
-  
+        Pir* pir;  
 };
 
 #endif

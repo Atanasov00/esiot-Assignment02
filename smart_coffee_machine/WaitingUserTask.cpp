@@ -5,7 +5,9 @@
 #include "SelectionTask.h"
 #include "ServoImpl.h"
 
-WaitingUserTask::WaitingUserTask(Task* sTask): selectionTask(sTask) {
+extern Task* selectionTask;
+
+WaitingUserTask::WaitingUserTask(){
   state =  INIT; 
 }
 
@@ -21,11 +23,13 @@ void WaitingUserTask::tick(){
     case INIT: {
       startTime = millis();
       state = WAITING;
+      Serial.println("WAITING");
     }
     break;
     case WAITING: {
       time = millis();
       if(time - startTime >= T_TIMEOUT || sonar->getDistance() >= 0.4){
+        Serial.println("BYE!");
         Serial.println(time - startTime);
         Serial.println(sonar->getDistance());
         state = RESET;
@@ -35,13 +39,15 @@ void WaitingUserTask::tick(){
     case RESET: {
       servo->on();
       servo->setPosition(0);
+      delay(1000);
       servo->off();
       state = DONE;
     }
     break;
     case DONE: {
       selectionTask->setActive(true);
-      this->setCompleted();
+      this->setActive(false);
+      state = INIT;
     }
   }
 }

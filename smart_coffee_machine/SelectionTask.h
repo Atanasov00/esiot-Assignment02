@@ -14,7 +14,7 @@
 class SelectionTask: public Task {
 
     public:
-        SelectionTask(Display* lcd, Task* makingTask, Task* userPresenceTask);
+        SelectionTask(Display* lcd);
         void init();
         void tick();        
 
@@ -42,8 +42,6 @@ class SelectionTask: public Task {
         Potentiometer* pot;
         int currentSelection;
         int sugarValue;
-        Task* makingTask;
-        Task* userPresenceTask;  
         
 };
 

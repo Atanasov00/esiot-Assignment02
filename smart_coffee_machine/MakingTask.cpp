@@ -7,6 +7,8 @@
 
 extern String currentDrink;
 
+extern Task* waitingUserTask;
+
 MakingTask::MakingTask(Display* plcd): lcd(plcd){
   state = INITIALIZATION;
 }
@@ -16,6 +18,8 @@ void MakingTask:: init() {
     pos = 0;
     servo->on();
     servo->setPosition(0);
+    delay(1000);
+    servo->off();
 }
 
 void MakingTask::tick() {
@@ -45,7 +49,9 @@ void MakingTask::tick() {
       lcd->getLcd().clear();
       lcd->print("The "+ String(currentDrink), 1 , 1);
       lcd->print("is ready.", 1, 2);
-      this->setCompleted();
+      waitingUserTask->setActive(true);
+      this->setActive(false);
+      state = INITIALIZATION;
     }
   }
 }

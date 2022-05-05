@@ -8,7 +8,7 @@
 class WaitingUserTask: public Task {
     
     public:
-        WaitingUserTask(Task* selectionTask);
+        WaitingUserTask();
         void init();
         void tick();
 
@@ -16,7 +16,6 @@ class WaitingUserTask: public Task {
 
         enum {INIT, WAITING, RESET, DONE} state;
         
-        Task* selectionTask;
         Sonar* sonar;
         ServoMotor* servo;
         unsigned long startTime;

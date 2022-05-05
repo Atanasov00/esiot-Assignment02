@@ -10,7 +10,10 @@ extern Drink* chocolate;
 
 String currentDrink;
 
-SelectionTask::SelectionTask(Display* plcd, Task* mTask, Task* pTask): lcd(plcd), makingTask(mTask), userPresenceTask(pTask) {
+extern Task* makingTask;
+extern Task* userPresenceTask;
+
+SelectionTask::SelectionTask(Display* plcd): lcd(plcd){
   state = READY;
 }
 
@@ -130,9 +133,10 @@ void SelectionTask::tick(){
     }
     break;
     case START_MAKE: {
-      //userPresenceTask->setActive(false);
+      userPresenceTask->setActive(false);
       makingTask->setActive(true);
-      this->setCompleted();
+      this->setActive(false);
+      state = READY;
     }
     break;
     case ASSISTANCE:

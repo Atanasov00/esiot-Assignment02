@@ -5,16 +5,18 @@
 
 #include <avr/sleep.h>
 
+extern Task* selectionTask;
+
 void wakeUp(){}
 
-UserPresenceTask::UserPresenceTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask) {
+UserPresenceTask::UserPresenceTask(Display* plcd): lcd(plcd) {
   state = IDLE;
   pir = new Pir(PIR_PIN);
 }
 
 
 void UserPresenceTask:: init(){
-  pir->calibrate();
+  //pir->calibrate();
   startTime = millis();
 }
 
