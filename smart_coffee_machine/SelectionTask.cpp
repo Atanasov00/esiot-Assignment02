@@ -97,7 +97,7 @@ void SelectionTask::init(){
 void SelectionTask::tick(){
   switch(state){
     case READY:{
-      //Serial.println("ready");
+      Serial.println("ready");
       lcd->getLcd().clear();
       lcd->print("Ready", 2, 1);
       checkIfAnyButtonPressed();
