@@ -11,5 +11,5 @@ bool Pir::isDetected(){
 }
 
 void Pir::calibrate(){
-    delay(10000);
+    delay(1000);
 }

@@ -16,7 +16,7 @@ UserPresenceTask::UserPresenceTask(Display* plcd): lcd(plcd) {
 
 
 void UserPresenceTask:: init(){
-  //pir->calibrate();
+  pir->calibrate();
   startTime = millis();
 }
 
