@@ -18,7 +18,7 @@ void setup() {
   Serial.begin(9600);
   Display* lcd = new Display();
 
-  makingTask = new MakingTask(lcd, selectionTask);
+  makingTask = new MakingTask(lcd);
   makingTask->init();
   
   selectionTask = new SelectionTask(lcd, makingTask, userPresenceTask);

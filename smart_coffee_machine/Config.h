@@ -15,7 +15,7 @@
 #define PIR_PIN 2
 
 #define SONAR_TRIG_PIN 12
-#define SONAR_ECHO PIN 13
+#define SONAR_ECHO_PIN 13
 
 #define SERVO_PIN 9
 

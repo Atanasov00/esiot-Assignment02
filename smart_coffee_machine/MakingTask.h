@@ -10,7 +10,7 @@
 class MakingTask: public Task {
 
     public:
-        MakingTask(Display* lcd, Task* selectionTask);
+        MakingTask(Display* lcd);
         void init();
         void tick();
 
@@ -23,7 +23,7 @@ class MakingTask: public Task {
        unsigned long startTime;
        unsigned long progress;
        int pos; 
-       Task* selectionTask;
+       
 
 };
 
