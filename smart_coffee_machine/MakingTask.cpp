@@ -7,7 +7,7 @@
 
 extern String currentDrink;
 
-MakingTask::MakingTask(Display* plcd, Task* sTask): lcd(plcd), selectionTask(sTask){
+MakingTask::MakingTask(Display* plcd): lcd(plcd){
   state = INITIALIZATION;
 }
 
