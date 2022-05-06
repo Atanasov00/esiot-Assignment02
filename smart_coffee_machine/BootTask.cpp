@@ -53,8 +53,8 @@ void BootTask::tick(){
             lcd->print("Ready", 2, 1);
             selectionTask->setActive(true);
             userPresenceTask->setActive(true);
-            Serial.println("BOOT");
             selfCheckTask->setActive(true);
+            Serial.println(selfCheckTask->isActive());
             state = COMPLETED;
         }
         break;

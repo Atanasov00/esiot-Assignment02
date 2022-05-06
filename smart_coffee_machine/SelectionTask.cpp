@@ -133,7 +133,7 @@ void SelectionTask::tick(){
       if(allProductsEmpty()){
         state = ASSISTANCE;
       } else {
-        Serial.println("Ready");
+        //Serial.println("Ready");
         lcd->getLcd().clear();
         lcd->print("Ready", 2, 1);
         checkIfAnyButtonPressed();

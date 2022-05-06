@@ -29,21 +29,21 @@ void SelfCheckTask::tick(){
       Serial.println("SelfCheckTask");
       startTime = millis();
       state = WAITING;
+      servo->on();
     }
     break;
     case WAITING: {
-     Serial.println("SelfCheckTask2");
+     //Serial.println("SelfCheckTask2");
      actualTime = millis();
      if(actualTime - startTime >= 10000){
       lcd->getLcd().clear();
       lcd->print("Doing self test", 2, 1);
-      servo->on();
       servo->setPosition(0);
-      delay(1000);
-      servo->off();
+      delay(500);
       startTime = millis();
       state = CHECKING;
      }
+     servo->off();
     }
     break;
     case CHECKING: {
