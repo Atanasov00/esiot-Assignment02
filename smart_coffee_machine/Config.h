@@ -30,6 +30,6 @@
 #define TEMP_MIN 17
 #define TEMP_MAX 24
 
-#define N_MAX_ITEMS 10
+#define N_MAX_ITEMS 1
 
 #endif

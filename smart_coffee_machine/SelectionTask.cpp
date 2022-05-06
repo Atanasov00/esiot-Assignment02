@@ -81,9 +81,38 @@ void SelectionTask::bDownPressed(){
 
 void SelectionTask::checkIfMakingPressed(){
   if(bMake->isPressed()){
-    state = START_MAKE;
     Serial.println("Start making");
+    if(currentDrink.equals("Coffee") && coffee->getQuantity() > 0){
+      state = START_MAKE;
+      coffee->newProduct();
+    } else if (currentDrink.equals("Coffee") && coffee->getQuantity() == 0){
+      state = PRODUCT_EMPTY;
+      lcd->getLcd().clear();
+      lcd->print("Coffee is empty", 1, 1);
+      startTime = millis();
+    } else if(currentDrink.equals("Tea") && tea->getQuantity() > 0){
+      state = START_MAKE;
+      tea->newProduct();
+    } else if (currentDrink.equals("Tea") && tea->getQuantity() == 0) {
+      Serial.println("Tea is empty");
+      state = PRODUCT_EMPTY;
+      lcd->getLcd().clear();
+      lcd->print("Tea is empty", 1, 1);
+      startTime = millis();
+    } else if(currentDrink.equals("Chocolate") && chocolate->getQuantity() > 0) {
+      state = START_MAKE;
+      chocolate->newProduct();
+    } else {
+      state = PRODUCT_EMPTY;
+      lcd->getLcd().clear();
+      lcd->print("Chocolate is empty", 1, 1);
+      startTime = millis();
+    }
   }
+}
+
+bool SelectionTask::allProductsEmpty(){
+  return coffee->getQuantity() == 0 && tea->getQuantity() == 0 && chocolate->getQuantity() == 0;
 }
 
 void SelectionTask::init(){
@@ -100,12 +129,16 @@ void SelectionTask::init(){
 void SelectionTask::tick(){
   switch(state){
     case READY:{
-      Serial.println("ready");
-      lcd->getLcd().clear();
-      lcd->print("Ready", 2, 1);
-      checkIfAnyButtonPressed();
-      checkIfPotChanged();
-      checkIfMakingPressed();
+      if(allProductsEmpty()){
+        state = ASSISTANCE;
+      } else {
+        Serial.println("ready");
+        lcd->getLcd().clear();
+        lcd->print("Ready", 2, 1);
+        checkIfAnyButtonPressed();
+        checkIfPotChanged();
+        checkIfMakingPressed();
+      }
     }
     break;
     case SELECTION:{
@@ -133,13 +166,24 @@ void SelectionTask::tick(){
     }
     break;
     case START_MAKE: {
+      Serial.println("Coffee: " + String(coffee->getQuantity()));
+      Serial.println("Tea: " + String(tea->getQuantity()));
+      Serial.println("Chocolate: " + String(chocolate->getQuantity()));
       userPresenceTask->setActive(false);
       makingTask->setActive(true);
       this->setActive(false);
       state = READY;
     }
     break;
+    case PRODUCT_EMPTY:{
+      actualTime = millis();
+      if(actualTime - startTime >= T_TIMEOUT){
+        state = READY;
+      }
+    }
     case ASSISTANCE:
+      lcd->getLcd().clear();
+      lcd->print("Assistance Required.", 1, 1);
     break;
   }
 }

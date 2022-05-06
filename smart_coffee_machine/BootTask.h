@@ -24,10 +24,6 @@ class BootTask: public Task {
         int coffeeQuantity;
         int teaQuantity;
         int chocolateQuantity;
-        Drink* coffee;
-        Drink* chocolate;
-        Drink* tea;
-
 };
 
 #endif

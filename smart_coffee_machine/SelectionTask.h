@@ -20,7 +20,7 @@ class SelectionTask: public Task {
 
     private:
 
-        enum {SELECTION, READY, WAITING, SUGAR_SELECTION, START_MAKE, ASSISTANCE} state;        
+        enum {SELECTION, READY, WAITING, SUGAR_SELECTION, PRODUCT_EMPTY, START_MAKE, ASSISTANCE} state;        
 
         void bUpPressed();
         void bDownPressed();
@@ -28,6 +28,7 @@ class SelectionTask: public Task {
         void checkIfPotChanged();
         void checkIfMakingPressed();
         void potChanged();
+        bool allProductsEmpty();
 
         long time;
         long actualTime;

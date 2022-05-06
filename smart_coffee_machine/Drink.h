@@ -4,26 +4,15 @@
 #include "Arduino.h"
 
 class Drink {
-
-    private:
-    
-        int quantity = N_MAX_ITEMS;
-
     public:
         
         virtual String getName() = 0;
         
-        int getQuantity(){
-          return quantity;
-        }
+        virtual int getQuantity() = 0;
         
-        void newProduct() {
-          quantity--;
-        }
+        virtual void newProduct() = 0;
 
-        void refill(){
-          quantity = N_MAX_ITEMS;
-        }
+        virtual void refill() = 0;
 };
 
 #endif

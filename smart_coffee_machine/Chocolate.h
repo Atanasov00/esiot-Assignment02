@@ -12,6 +12,7 @@ class Chocolate: public Drink {
         String getName();
         int getQuantity();
         void newProduct();
+        void refill();
 
      private:
         int quantity;

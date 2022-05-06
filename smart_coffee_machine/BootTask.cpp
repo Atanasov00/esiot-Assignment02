@@ -8,6 +8,10 @@
 extern Task* selectionTask;
 extern Task* userPresenceTask;
 
+Drink* coffee;
+Drink* chocolate;
+Drink* tea;
+
 BootTask::BootTask(Display* plcd): lcd(plcd){
     state = WELCOME;
 }
@@ -30,6 +34,7 @@ void BootTask::tick(){
         break;
         case MESSAGE: {
           time = millis();
+          Serial.println("ciao");
           if(time - startTime >= 5000){
             state = INITIALIZATION;
           }
