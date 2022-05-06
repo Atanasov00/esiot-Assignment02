@@ -89,7 +89,7 @@ void SelectionTask::checkIfMakingPressed(){
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Coffee is empty", 1, 1);
-      startTime = millis();
+      time = millis();
     } else if(currentDrink.equals("Tea") && tea->getQuantity() > 0){
       state = START_MAKE;
       tea->newProduct();
@@ -98,7 +98,7 @@ void SelectionTask::checkIfMakingPressed(){
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Tea is empty", 1, 1);
-      startTime = millis();
+      time = millis();
     } else if(currentDrink.equals("Chocolate") && chocolate->getQuantity() > 0) {
       state = START_MAKE;
       chocolate->newProduct();
@@ -106,7 +106,7 @@ void SelectionTask::checkIfMakingPressed(){
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Chocolate is empty", 1, 1);
-      startTime = millis();
+      time = millis();
     }
   }
 }
@@ -132,7 +132,6 @@ void SelectionTask::tick(){
       if(allProductsEmpty()){
         state = ASSISTANCE;
       } else {
-        Serial.println("ready");
         lcd->getLcd().clear();
         lcd->print("Ready", 2, 1);
         checkIfAnyButtonPressed();
@@ -177,13 +176,14 @@ void SelectionTask::tick(){
     break;
     case PRODUCT_EMPTY:{
       actualTime = millis();
-      if(actualTime - startTime >= T_TIMEOUT){
+      if(actualTime - time >= T_TIMEOUT){
         state = READY;
       }
     }
+    break;
     case ASSISTANCE:
       lcd->getLcd().clear();
-      lcd->print("Assistance Required.", 1, 1);
+      lcd->print("Assistance Required.", 0, 1);
     break;
   }
 }

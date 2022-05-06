@@ -34,7 +34,6 @@ void BootTask::tick(){
         break;
         case MESSAGE: {
           time = millis();
-          Serial.println("ciao");
           if(time - startTime >= 5000){
             state = INITIALIZATION;
           }
