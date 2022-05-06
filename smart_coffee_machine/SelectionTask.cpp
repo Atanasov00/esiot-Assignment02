@@ -12,6 +12,7 @@ String currentDrink;
 
 extern Task* makingTask;
 extern Task* userPresenceTask;
+extern Task* selfCheckTask;
 
 SelectionTask::SelectionTask(Display* plcd): lcd(plcd){
   state = READY;
@@ -132,6 +133,7 @@ void SelectionTask::tick(){
       if(allProductsEmpty()){
         state = ASSISTANCE;
       } else {
+        Serial.println("Ready");
         lcd->getLcd().clear();
         lcd->print("Ready", 2, 1);
         checkIfAnyButtonPressed();
@@ -170,6 +172,7 @@ void SelectionTask::tick(){
       Serial.println("Chocolate: " + String(chocolate->getQuantity()));
       userPresenceTask->setActive(false);
       makingTask->setActive(true);
+      selfCheckTask->setActive(false);
       this->setActive(false);
       state = READY;
     }

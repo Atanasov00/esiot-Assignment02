@@ -19,7 +19,6 @@ class MakingTask: public Task {
        enum {INITIALIZATION, MAKING, READY} state;
 
        Display* lcd;
-       ServoMotor* servo;
        unsigned long startTime;
        unsigned long progress;
        int pos; 

@@ -4,9 +4,11 @@
 #include "Coffee.h"
 #include "Tea.h"
 #include "Chocolate.h"
+#include "SelfCheckTask.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
+extern Task* selfCheckTask;
 
 Drink* coffee;
 Drink* chocolate;
@@ -47,11 +49,12 @@ void BootTask::tick(){
         }
         break;
         case READY: {
-            Serial.println("BOOT");
             lcd->getLcd().clear();
             lcd->print("Ready", 2, 1);
             selectionTask->setActive(true);
             userPresenceTask->setActive(true);
+            Serial.println("BOOT");
+            selfCheckTask->setActive(true);
             state = COMPLETED;
         }
         break;

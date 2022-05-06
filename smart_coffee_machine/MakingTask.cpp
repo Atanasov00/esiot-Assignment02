@@ -6,7 +6,7 @@
 #include "SelectionTask.h"
 
 extern String currentDrink;
-
+ServoMotor* servo;
 extern Task* waitingUserTask;
 
 MakingTask::MakingTask(Display* plcd): lcd(plcd){

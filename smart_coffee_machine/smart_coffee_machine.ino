@@ -5,6 +5,7 @@
 #include "UserPresenceTask.h"
 #include "MakingTask.h"
 #include "WaitingUserTask.h"
+#include "SelfCheckTask.h"
 
 Scheduler scheduler;
 
@@ -13,6 +14,7 @@ Task* makingTask;
 Task* userPresenceTask;
 Task* bootTask; 
 Task* waitingUserTask;
+Task* selfCheckTask;
 
 void setup() {
   scheduler.init(50);
@@ -36,12 +38,17 @@ void setup() {
   waitingUserTask = new WaitingUserTask();
   waitingUserTask->init();
 
+  selfCheckTask = new SelfCheckTask(lcd);
+  selfCheckTask->init();
+  
+
   //Add tasks here
   scheduler.addTask(bootTask);
   scheduler.addTask(selectionTask);
   scheduler.addTask(userPresenceTask);
   scheduler.addTask(makingTask);
   scheduler.addTask(waitingUserTask);
+  scheduler.addTask(selfCheckTask);
 }
 
 void loop() {
