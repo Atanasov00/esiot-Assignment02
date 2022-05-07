@@ -6,6 +6,8 @@
 #include "ServoImpl.h"
 
 extern Task* selectionTask;
+extern Task* userPresenceTask;
+extern Task* selfCheckTask;
 
 WaitingUserTask::WaitingUserTask(){
   state =  INIT; 
@@ -28,7 +30,7 @@ void WaitingUserTask::tick(){
     break;
     case WAITING: {
       time = millis();
-      Serial.println(sonar->getDistance());
+      //Serial.println(sonar->getDistance());
       if(time - startTime >= T_TIMEOUT || sonar->getDistance() >= 0.4){
         Serial.println("BYE!");
         Serial.println(time - startTime);
@@ -47,6 +49,8 @@ void WaitingUserTask::tick(){
     break;
     case DONE: {
       selectionTask->setActive(true);
+      userPresenceTask->setActive(true);
+      selfCheckTask->setActive(true);
       this->setActive(false);
       state = INIT;
     }

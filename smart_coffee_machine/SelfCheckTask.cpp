@@ -33,6 +33,7 @@ void SelfCheckTask::tick(){
     case WAITING: {
      //Serial.println("SelfCheckTask2");
      actualTime = millis();
+     Serial.println(actualTime - startTime);
      if(actualTime - startTime >= T_CHECK){
       lcd->getLcd().clear();
       lcd->print("Doing self test", 2, 1);
@@ -53,7 +54,7 @@ void SelfCheckTask::tick(){
         }
         pos -= delta;
         delta = -delta;
-        delay(1000);
+        delay(500);
       } else {
         servo->off();
         selectionTask->setActive(true);

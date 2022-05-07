@@ -27,7 +27,7 @@ void BootTask::init(){
 void BootTask::tick(){
     switch(state){
         case WELCOME: {
-          Serial.println("ciao");
+            //Serial.println("ciao");
             lcd->initialize();
             lcd->print("Setting up...", 2, 1);
             startTime = millis();
@@ -36,7 +36,7 @@ void BootTask::tick(){
         break;
         case MESSAGE: {
           time = millis();
-          if(time - startTime >= 5000){
+          if(time - startTime >= 2000){
             state = INITIALIZATION;
           }
         }
@@ -54,7 +54,7 @@ void BootTask::tick(){
             selectionTask->setActive(true);
             userPresenceTask->setActive(true);
             selfCheckTask->setActive(true);
-            Serial.println(selfCheckTask->isActive());
+            //Serial.println(selfCheckTask->isActive());
             state = COMPLETED;
         }
         break;
