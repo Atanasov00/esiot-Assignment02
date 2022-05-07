@@ -47,6 +47,7 @@ void SelectionTask::bUpPressed(){
     }
      break;
   }
+  Serial.println("You're selecting a " + currentDrink);
 }
 
 void SelectionTask::checkIfPotChanged(){
@@ -58,6 +59,7 @@ void SelectionTask::checkIfPotChanged(){
 
 void SelectionTask::potChanged(){
   sugarValue = pot->getValue();
+  Serial.println("You set the sugar level to " + String(sugarValue));
 }
 
 void SelectionTask::bDownPressed(){ 
@@ -78,20 +80,23 @@ void SelectionTask::bDownPressed(){
     }
      break;
   }
+  Serial.println("You're selecting a " + currentDrink);
 }
 
 void SelectionTask::checkIfMakingPressed(){
   if(bMake->isPressed()){
-    Serial.println("Start making");
     if(currentDrink.equals("Coffee") && coffee->getQuantity() > 0){
+      Serial.println("Making a coffee...");
       state = START_MAKE;
       coffee->newProduct();
     } else if (currentDrink.equals("Coffee") && coffee->getQuantity() == 0){
+      Serial.println("Coffee is empty");
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Coffee is empty", 1, 1);
       time = millis();
     } else if(currentDrink.equals("Tea") && tea->getQuantity() > 0){
+      Serial.println("Making a tea...");
       state = START_MAKE;
       tea->newProduct();
     } else if (currentDrink.equals("Tea") && tea->getQuantity() == 0) {
@@ -101,9 +106,11 @@ void SelectionTask::checkIfMakingPressed(){
       lcd->print("Tea is empty", 1, 1);
       time = millis();
     } else if(currentDrink.equals("Chocolate") && chocolate->getQuantity() > 0) {
+      Serial.println("Making a chocolate...");
       state = START_MAKE;
       chocolate->newProduct();
     } else {
+      Serial.println("Chocolate is empty");
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Chocolate is empty", 1, 1);

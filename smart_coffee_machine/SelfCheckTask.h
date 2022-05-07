@@ -25,7 +25,7 @@ class SelfCheckTask: public Task {
     TempSensor* temp;
     int pos;
     int delta;
-    
+    float temperature;
 };
 
 #endif

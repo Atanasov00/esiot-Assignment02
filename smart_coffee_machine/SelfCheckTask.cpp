@@ -25,7 +25,7 @@ void SelfCheckTask::init(){
 void SelfCheckTask::tick(){
   switch(state){
     case INIT: {
-      Serial.println("SelfCheckTask");
+      //Serial.println("SelfCheckTask");
       startTime = millis();
       state = WAITING;
     }
@@ -33,8 +33,9 @@ void SelfCheckTask::tick(){
     case WAITING: {
      //Serial.println("SelfCheckTask2");
      actualTime = millis();
-     Serial.println(actualTime - startTime);
+     //Serial.println(actualTime - startTime);
      if(actualTime - startTime >= T_CHECK){
+      Serial.println("Machine is doing a self-test...");
       lcd->getLcd().clear();
       lcd->print("Doing self test", 2, 1);
       selectionTask->setActive(false);
@@ -57,12 +58,22 @@ void SelfCheckTask::tick(){
         delay(500);
       } else {
         servo->off();
-        selectionTask->setActive(true);
-        userPresenceTask->setActive(true);
-        state = INIT;
+        temperature = temp->getTemperature();
+        Serial.println("Temperature is " + String(temperature) + "°C");
+        if(temperature < TEMP_MIN || temperature > TEMP_MAX) {
+          Serial.println("Entering assistance mode (machine temperature is out of bounds..)");
+          state = ASSISTANCE;
+        } else {
+          selectionTask->setActive(true);
+          userPresenceTask->setActive(true);
+          state = INIT;
+        }
       }
     }
     break;
+    case ASSISTANCE:
+      lcd->getLcd().clear();
+      lcd->print("Assistance Required.", 0, 1);
+    break;
   }
-    
 }

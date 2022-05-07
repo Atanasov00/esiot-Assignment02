@@ -27,7 +27,7 @@ void BootTask::init(){
 void BootTask::tick(){
     switch(state){
         case WELCOME: {
-            //Serial.println("ciao");
+            Serial.println("Welcome to Smart-Coffee machine.");
             lcd->initialize();
             lcd->print("Setting up...", 2, 1);
             startTime = millis();

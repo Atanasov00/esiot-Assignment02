@@ -25,14 +25,14 @@ void WaitingUserTask::tick(){
     case INIT: {
       startTime = millis();
       state = WAITING;
-      Serial.println("WAITING");
+      Serial.println("Waiting for user...");
     }
     break;
     case WAITING: {
       time = millis();
       //Serial.println(sonar->getDistance());
       if(time - startTime >= T_TIMEOUT || sonar->getDistance() >= 0.4){
-        Serial.println("BYE!");
+        Serial.println("Bye!");
         Serial.println(time - startTime);
         Serial.println(sonar->getDistance());
         state = RESET;

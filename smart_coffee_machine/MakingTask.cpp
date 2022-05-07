@@ -25,8 +25,6 @@ void MakingTask:: init() {
 void MakingTask::tick() {
   switch(state) {
     case INITIALIZATION: {
-      /*Serial.println("|--"+String(currentDrink));
-      Serial.println("MAKING TASK");*/
       lcd->getLcd().clear();
       lcd->print("Making a " + String(currentDrink), 1, 1);
       servo->on();
@@ -46,6 +44,7 @@ void MakingTask::tick() {
     }
     break;
     case READY: {
+      Serial.println("Preparation finished.");
       lcd->getLcd().clear();
       lcd->print("The "+ String(currentDrink), 1 , 1);
       lcd->print("is ready.", 1, 2);
