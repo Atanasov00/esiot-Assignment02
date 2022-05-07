@@ -4,25 +4,33 @@ Tasks:
 
 -bootTask
    #welcome
+   #message
    #initialization
    #ready
+   #completed
 -selectionTask
    #selection
    #ready
+   #waiting
    #sugarSelection
-   #startMake
+   #product_empty
+   #start_make
    #assistance
--preparationTask
+-makingTask
+   #initialization
    #making
    #ready
 -waitingUserTask
+   #init
    #waiting
    #reset
    #done
 -userPresenceTask
+   #active
    #idle
    #sleep
 -selfCheckTask
+   #init
    #waiting
    #checking
    #assistance
