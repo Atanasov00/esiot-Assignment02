@@ -14,7 +14,7 @@ WaitingUserTask::WaitingUserTask(){
 void WaitingUserTask::init(){
   startTime = 0;
   time = 0;
-  sonar = new Sonar(SONAR_ECHO_PIN, SONAR_TRIG_PIN, T_TIMEOUT);
+  sonar = new Sonar(SONAR_ECHO_PIN, SONAR_TRIG_PIN);
   servo = new ServoImpl(SERVO_PIN);
 }
 
@@ -28,6 +28,7 @@ void WaitingUserTask::tick(){
     break;
     case WAITING: {
       time = millis();
+      Serial.println(sonar->getDistance());
       if(time - startTime >= T_TIMEOUT || sonar->getDistance() >= 0.4){
         Serial.println("BYE!");
         Serial.println(time - startTime);

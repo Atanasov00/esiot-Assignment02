@@ -1,7 +1,7 @@
 #include "Sonar.h"
 #include "Arduino.h"
 
-Sonar::Sonar(int pEcho, int pTrig, long tMax): echoPin(pEcho), trigPin(pTrig), maxTime(tMax) {
+Sonar::Sonar(int pEcho, int pTrig): echoPin(pEcho), trigPin(pTrig){
   pinMode(echoPin, INPUT);
   pinMode(trigPin, OUTPUT);
   //Temperature at 20°C by default
@@ -23,7 +23,7 @@ float Sonar::getDistance(){
   delayMicroseconds(5);
   digitalWrite(trigPin, LOW);
 
-  float pulse = pulseIn(echoPin, HIGH, maxTime);
+  float pulse = pulseIn(echoPin, HIGH);
   if(pulse == 0) {
     return -1;
   } else {
