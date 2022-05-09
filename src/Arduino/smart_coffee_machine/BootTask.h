@@ -18,7 +18,7 @@ class BootTask: public Task {
 
         enum {WELCOME, MESSAGE, INITIALIZATION, READY, COMPLETED} state;
 
-        long time;
+        long timeExp;
         long startTime;
         Display* lcd;
         int coffeeQuantity;

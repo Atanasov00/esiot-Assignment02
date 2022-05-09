@@ -62,6 +62,8 @@ void SelfCheckTask::tick(){
         Serial.println("Temperature is " + String(temperature) + "°C");
         if(temperature < TEMP_MIN || temperature > TEMP_MAX) {
           Serial.println("Entering assistance mode (machine temperature is out of bounds..)");
+          lcd->getLcd().clear();
+          lcd->print("Assistance Required.", 0, 1);
           state = ASSISTANCE;
         } else {
           selectionTask->setActive(true);
@@ -72,8 +74,7 @@ void SelfCheckTask::tick(){
     }
     break;
     case ASSISTANCE:
-      lcd->getLcd().clear();
-      lcd->print("Assistance Required.", 0, 1);
+      
     break;
   }
 }
