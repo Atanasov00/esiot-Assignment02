@@ -19,7 +19,9 @@ public class GUI extends JFrame {
 	private final JButton recoverButton = new JButton("Recover");
 	
 	private final JLabel modalityLabel = new JLabel("Modality:");
-	private final JLabel productsLabel = new JLabel("Products available:");
+	private final JLabel coffeeAvailable = new JLabel("Coffee available:");
+	private final JLabel chocolateAvailable = new JLabel("Chocolate available:");
+	private final JLabel teaAvailable = new JLabel("Tea available:");
 	private final JLabel selftestLabel = new JLabel("Self-test performed:");
 	
 	
@@ -34,7 +36,7 @@ public class GUI extends JFrame {
 		
 		final JPanel panel = new JPanel();
 		final JPanel panel2 = new JPanel(new FlowLayout());
-		final JPanel panel3 = new JPanel(new GridLayout(3,1));
+		final JPanel panel3 = new JPanel(new GridLayout(5,1));
 		
 		final JLabel title = new JLabel("Coffee Machine Manager", JLabel.CENTER);
 		title.setFont(new Font("Serif", Font.BOLD, 20));
@@ -49,7 +51,9 @@ public class GUI extends JFrame {
 		panel2.add(recoverButton);
 		
 		panel3.add(modalityLabel);
-		panel3.add(productsLabel);
+		panel3.add(coffeeAvailable);
+		panel3.add(chocolateAvailable);
+		panel3.add(teaAvailable);
 		panel3.add(selftestLabel);
 		
 		panel.add(panel2, BorderLayout.SOUTH);
@@ -70,9 +74,21 @@ public class GUI extends JFrame {
 		});
 	}
 	
-	public void setProductsInfo(String msg) {
+	public void setCoffeeInfo(String msg) {
 		SwingUtilities.invokeLater(() -> {
-			productsLabel.setText(msg);
+			coffeeAvailable.setText(msg);
+		});
+	}
+	
+	public void setChocolateInfo(String msg) {
+		SwingUtilities.invokeLater(() -> {
+			chocolateAvailable.setText(msg);
+		});
+	}
+	
+	public void setTeaInfo(String msg) {
+		SwingUtilities.invokeLater(() -> {
+			teaAvailable.setText(msg);
 		});
 	}
 	
@@ -82,12 +98,27 @@ public class GUI extends JFrame {
 		});
 	}
 	
-	public void startMaintenance() {
+	public void startEmptyMaintenance() {
 		SwingUtilities.invokeLater(() -> {
 			refillButton.setEnabled(true);
+		});
+	}
+	
+	public void startTempMaintenance() {
+		SwingUtilities.invokeLater(() -> {
 			recoverButton.setEnabled(true);
 		});
 	}
 	
+	public void refilled(int qty){
+		SwingUtilities.invokeLater(() -> {
+			refillButton.setEnabled(false);
+		});
+	}
 	
+	public void recovered() {
+		SwingUtilities.invokeLater(() -> {
+			recoverButton.setEnabled(false);
+		});
+	}
 }

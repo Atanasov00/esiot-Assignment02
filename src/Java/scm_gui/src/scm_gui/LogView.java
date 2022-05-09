@@ -10,6 +10,10 @@ import javax.swing.SwingUtilities;
 
 public class LogView extends JFrame {
 	
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7361708926641670567L;
 	private JTextArea log;
 
 	public LogView(){
