@@ -1,19 +1,18 @@
 package scm_gui;
 
-import jssc.*;
-import SerialCommChannel.*;
+import SerialCommChannel.SerialCommChannel;
 
 public class MonitoringAgent extends Thread {
-	
+
 	private final SerialCommChannel channel;
 	private final GUI view;
 	private final LogView logger;
-	
+
 	private int coffeeQuantity;
 	private int chocolateQuantity;
 	private int teaQuantity;
 	private int selftestPerformed;
-	
+
 	static final int QUANTITY = 10;
 	static final String CM_PREFIX 	=  "cm:";
 	static final String IDLE_PREFIX = "dl";
@@ -27,9 +26,9 @@ public class MonitoringAgent extends Thread {
 	static final String MSG_RECOVERED = "rd";
 	static final String MSG_ASSISTANCE_EMPTY = "em";
 	static final String MSG_ASSISTANCE_TEMP = "tm";
-	
-	
-	
+
+
+
 	public MonitoringAgent(SerialCommChannel channel, GUI view, LogView logger) {
 		this.channel = channel;
 		this.view = view;
@@ -39,37 +38,40 @@ public class MonitoringAgent extends Thread {
 		teaQuantity = QUANTITY;
 		selftestPerformed = 0;
 	}
-	
+
+	@Override
 	public void run() {
 		while(true) {
 			try {
-				String msg = channel.receiveMsg();
-				if(msg.startsWith(CM_PREFIX)) {
-					String cmd = msg.substring(CM_PREFIX.length()); 
-					logger.log("new command: "+cmd);
-					if(cmd.startsWith(IDLE_PREFIX)) {
-						view.setModalityInfo("Modality: IDLE");
-					} else if(cmd.startsWith(WORKING_PREFIX)) {
-						view.setModalityInfo("Modality: WORKING");
-					} else if(cmd.startsWith(ASSISTANCE_PREFIX)) {
-						view.setModalityInfo("Modality: ASSISTANCE");
-					} else if(cmd.startsWith(COFFEEQ_PREFIX)) {
-						view.setCoffeeInfo("Coffee available: " + coffeeQuantity);
-					} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-						view.setChocolateInfo("Chocolate available: " + chocolateQuantity);
-					} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-						view.setTeaInfo("Tea available: " + teaQuantity);
-					} else if(cmd.startsWith(SELF_PREFIX)) {
-						view.setSelftestInfo("Selftest performed: " + selftestPerformed);
-					} else if(cmd.startsWith(MSG_ASSISTANCE_EMPTY)) {
-						view.startEmptyMaintenance();
-					} else if(cmd.startsWith(MSG_ASSISTANCE_TEMP)) {
-						view.startTempMaintenance();
+				if(channel.isMsgAvailable()) {
+					String msg = channel.receiveMsg();
+					if(msg.startsWith(CM_PREFIX)) {
+						String cmd = msg.substring(CM_PREFIX.length());
+						logger.log("new command: "+cmd);
+						if(cmd.startsWith(IDLE_PREFIX)) {
+							view.setModalityInfo("Modality: IDLE");
+						} else if(cmd.startsWith(WORKING_PREFIX)) {
+							view.setModalityInfo("Modality: WORKING");
+						} else if(cmd.startsWith(ASSISTANCE_PREFIX)) {
+							view.setModalityInfo("Modality: ASSISTANCE");
+						} else if(cmd.startsWith(COFFEEQ_PREFIX)) {
+							view.setCoffeeInfo("Coffee available: " + coffeeQuantity);
+						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
+							view.setChocolateInfo("Chocolate available: " + chocolateQuantity);
+						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
+							view.setTeaInfo("Tea available: " + teaQuantity);
+						} else if(cmd.startsWith(SELF_PREFIX)) {
+							view.setSelftestInfo("Selftest performed: " + selftestPerformed);
+						} else if(cmd.startsWith(MSG_ASSISTANCE_EMPTY)) {
+							view.startEmptyMaintenance();
+						} else if(cmd.startsWith(MSG_ASSISTANCE_TEMP)) {
+							view.startTempMaintenance();
+						}
 					}
-				} 	
-			} catch(Exception ex) {
-				ex.printStackTrace();
+				}
+				} catch(Exception ex) {
+					ex.printStackTrace();
+				}
 			}
-		}
 	}
 }

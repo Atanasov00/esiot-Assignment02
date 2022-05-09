@@ -4,23 +4,22 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
 import SerialCommChannel.SerialCommChannel;
-import jssc.*;
 
 public class Controller implements ActionListener {
 
 	SerialCommChannel channel;
 	GUI view;
-	
+
 	public Controller(String port, GUI view, LogView logger) throws Exception {
 		this.view = view;
-		channel = new SerialCommChannel(port, 9600);	
-		
-		
+		channel = new SerialCommChannel(port, 9600);
+		new MonitoringAgent(channel,view,logger).start();
+
 		System.out.println("Waiting arduino for rebootin...");
 		Thread.sleep(4000);
 		System.out.println("Ready");
 	}
-	
+
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		try {
@@ -34,6 +33,6 @@ public class Controller implements ActionListener {
 		}
 	}
 
-	
-	
+
+
 }
