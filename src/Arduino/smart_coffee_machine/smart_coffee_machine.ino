@@ -6,6 +6,7 @@
 #include "MakingTask.h"
 #include "WaitingUserTask.h"
 #include "SelfCheckTask.h"
+#include "MsgService.h"
 
 Scheduler scheduler;
 

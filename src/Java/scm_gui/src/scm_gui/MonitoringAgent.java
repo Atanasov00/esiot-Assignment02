@@ -13,7 +13,6 @@ public class MonitoringAgent extends Thread {
 	private int teaQuantity;
 	private int selftestPerformed;
 
-	static final int QUANTITY = 10;
 	static final String CM_PREFIX 	=  "cm:";
 	static final String IDLE_PREFIX = "dl";
 	static final String WORKING_PREFIX = "wk";
@@ -33,9 +32,6 @@ public class MonitoringAgent extends Thread {
 		this.channel = channel;
 		this.view = view;
 		this.logger = logger;
-		coffeeQuantity = QUANTITY;
-		chocolateQuantity = QUANTITY;
-		teaQuantity = QUANTITY;
 		selftestPerformed = 0;
 	}
 
@@ -55,15 +51,16 @@ public class MonitoringAgent extends Thread {
 						} else if(cmd.startsWith(ASSISTANCE_PREFIX)) {
 							view.setModalityInfo("Modality: ASSISTANCE");
 						} else if(cmd.startsWith(COFFEEQ_PREFIX)) {
-							cmd = msg.substring(COFFEEQ_PREFIX.length());
+							cmd = msg.substring(CM_PREFIX.length() + COFFEEQ_PREFIX.length() + 1);
 							view.setCoffeeInfo("Coffee available: " + cmd);
 						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-							cmd = msg.substring(CHOCOLATEQ_PREFIX.length());
+							cmd = msg.substring(CM_PREFIX.length() + CHOCOLATEQ_PREFIX.length() + 1);
 							view.setChocolateInfo("Chocolate available: " + cmd);
-						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-							cmd = msg.substring(TEAQ_PREFIX.length());
+						} else if(cmd.startsWith(TEAQ_PREFIX)) {
+							cmd = msg.substring(CM_PREFIX.length() + TEAQ_PREFIX.length() + 1);
 							view.setTeaInfo("Tea available: " + cmd);
 						} else if(cmd.startsWith(SELF_PREFIX)) {
+							selftestPerformed++;
 							view.setSelftestInfo("Selftest performed: " + selftestPerformed);
 						} else if(cmd.startsWith(MSG_ASSISTANCE_EMPTY)) {
 							view.startEmptyMaintenance();

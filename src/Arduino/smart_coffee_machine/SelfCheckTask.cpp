@@ -6,7 +6,7 @@
 #include "Display.h"
 #include "SelectionTask.h"
 #include "UserPresenceTask.h"
-
+#include "MsgService.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
@@ -58,12 +58,15 @@ void SelfCheckTask::tick(){
         delay(500);
       } else {
         servo->off();
+        MsgService.sendMsg("cm:sf");
         temperature = temp->getTemperature();
         Serial.println("Temperature is " + String(temperature) + "°C");
         if(temperature < TEMP_MIN || temperature > TEMP_MAX) {
           Serial.println("Entering assistance mode (machine temperature is out of bounds..)");
           lcd->getLcd().clear();
           lcd->print("Assistance Required.", 0, 1);
+          MsgService.sendMsg("cm:ss");
+          MsgService.sendMsg("cm:tm");
           state = ASSISTANCE;
         } else {
           selectionTask->setActive(true);
@@ -74,7 +77,17 @@ void SelfCheckTask::tick(){
     }
     break;
     case ASSISTANCE:
-      
+      if (MsgService.isMsgAvailable()){
+        Msg* msg = MsgService.receiveMsg();    
+        if (msg->getContent() == "ok"){
+           MsgService.sendMsg("cm:dl");
+           selectionTask->setActive(true);
+           userPresenceTask->setActive(true);
+           state = INIT;
+         }
+        /* NOT TO FORGET: msg deallocation */
+        delete msg;
+    }
     break;
   }
 }

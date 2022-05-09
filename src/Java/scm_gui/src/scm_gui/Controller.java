@@ -24,9 +24,11 @@ public class Controller implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		try {
 			if(e.getActionCommand().equals("Refill")) {
-					channel.sendMsg("10");
+				channel.sendMsg("10");
+				view.refilled();
 			} else if(e.getActionCommand().equals("Recover")) {
-				channel.sendMsg("Start recovering...");
+				channel.sendMsg("ok");
+				view.recovered();
 			}
 		} catch (Exception ex) {
 			ex.printStackTrace();

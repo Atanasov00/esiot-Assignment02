@@ -5,6 +5,7 @@
 #include "Tea.h"
 #include "Chocolate.h"
 #include "SelfCheckTask.h"
+#include "MsgService.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
@@ -27,6 +28,7 @@ void BootTask::init(){
 void BootTask::tick(){
     switch(state){
         case WELCOME: {
+            //MsgService.init();
             Serial.println("Welcome to Smart-Coffee machine.");
             lcd->initialize();
             lcd->print("Setting up...", 2, 1);
@@ -50,6 +52,10 @@ void BootTask::tick(){
         }
         break;
         case READY: {
+            MsgService.sendMsg("cm:dl");
+            MsgService.sendMsg("cm:cfq:"+String(coffee->getQuantity()));
+            MsgService.sendMsg("cm:teq:"+String(tea->getQuantity()));
+            MsgService.sendMsg("cm:chq:"+String(chocolate->getQuantity()));
             lcd->getLcd().clear();
             lcd->print("Ready", 2, 1);
             selectionTask->setActive(true);

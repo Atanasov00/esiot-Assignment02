@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "SelectionTask.h"
 #include "ServoImpl.h"
+#include "MsgService.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
@@ -48,6 +49,7 @@ void WaitingUserTask::tick(){
     }
     break;
     case DONE: {
+      MsgService.sendMsg("cm:dl");
       selectionTask->setActive(true);
       userPresenceTask->setActive(true);
       selfCheckTask->setActive(true);

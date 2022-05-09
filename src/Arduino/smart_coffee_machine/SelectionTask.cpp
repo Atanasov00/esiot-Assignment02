@@ -3,6 +3,7 @@
 #include "ButtonImpl.h"
 #include "Config.h"
 #include "Pot.h"
+#include "MsgService.h"
 
 extern Drink* coffee;
 extern Drink* tea;
@@ -89,6 +90,8 @@ void SelectionTask::checkIfMakingPressed(){
       Serial.println("Making a coffee...");
       state = START_MAKE;
       coffee->newProduct();
+      MsgService.sendMsg("cm:wk");
+      MsgService.sendMsg("cm:cfq:"+String(coffee->getQuantity()));
     } else if (currentDrink.equals("Coffee") && coffee->getQuantity() == 0){
       Serial.println("Coffee is empty");
       state = PRODUCT_EMPTY;
@@ -99,6 +102,8 @@ void SelectionTask::checkIfMakingPressed(){
       Serial.println("Making a tea...");
       state = START_MAKE;
       tea->newProduct();
+      MsgService.sendMsg("cm:wk");
+      MsgService.sendMsg("cm:teq:"+String(tea->getQuantity()));
     } else if (currentDrink.equals("Tea") && tea->getQuantity() == 0) {
       Serial.println("Tea is empty");
       state = PRODUCT_EMPTY;
@@ -109,6 +114,8 @@ void SelectionTask::checkIfMakingPressed(){
       Serial.println("Making a chocolate...");
       state = START_MAKE;
       chocolate->newProduct();
+      MsgService.sendMsg("cm:wk");
+      MsgService.sendMsg("cm:chq:"+String(chocolate->getQuantity()));
     } else {
       Serial.println("Chocolate is empty");
       state = PRODUCT_EMPTY;
@@ -135,12 +142,15 @@ void SelectionTask::init(){
 }
 
 void SelectionTask::tick(){
+  Serial.println("ready");
   switch(state){
     case READY:{
       if(allProductsEmpty()){
+        MsgService.sendMsg("cm:ss");
+        MsgService.sendMsg("cm:em");
         state = ASSISTANCE;
       } else {
-        //Serial.println("Ready");
+        Serial.println("Ready");
         lcd->getLcd().clear();
         lcd->print("Ready", 2, 1);
         checkIfAnyButtonPressed();
@@ -194,6 +204,21 @@ void SelectionTask::tick(){
     case ASSISTANCE:
       lcd->getLcd().clear();
       lcd->print("Assistance Required.", 0, 1);
+      if (MsgService.isMsgAvailable()){
+      Msg* msg = MsgService.receiveMsg();    
+      if (msg->getContent() == "10"){
+         coffee->refill();
+         tea->refill();
+         chocolate->refill();
+         state = READY;
+         MsgService.sendMsg("cm:dl");
+         MsgService.sendMsg("cm:cfq:"+String(coffee->getQuantity()));
+         MsgService.sendMsg("cm:teq:"+String(tea->getQuantity()));
+         MsgService.sendMsg("cm:chq:"+String(chocolate->getQuantity()));
+       } 
+    /* NOT TO FORGET: msg deallocation */
+    delete msg;
+  }
     break;
   }
 }
