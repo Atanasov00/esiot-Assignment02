@@ -55,11 +55,14 @@ public class MonitoringAgent extends Thread {
 						} else if(cmd.startsWith(ASSISTANCE_PREFIX)) {
 							view.setModalityInfo("Modality: ASSISTANCE");
 						} else if(cmd.startsWith(COFFEEQ_PREFIX)) {
-							view.setCoffeeInfo("Coffee available: " + coffeeQuantity);
+							cmd = msg.substring(COFFEEQ_PREFIX.length());
+							view.setCoffeeInfo("Coffee available: " + cmd);
 						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-							view.setChocolateInfo("Chocolate available: " + chocolateQuantity);
+							cmd = msg.substring(CHOCOLATEQ_PREFIX.length());
+							view.setChocolateInfo("Chocolate available: " + cmd);
 						} else if(cmd.startsWith(CHOCOLATEQ_PREFIX)) {
-							view.setTeaInfo("Tea available: " + teaQuantity);
+							cmd = msg.substring(TEAQ_PREFIX.length());
+							view.setTeaInfo("Tea available: " + cmd);
 						} else if(cmd.startsWith(SELF_PREFIX)) {
 							view.setSelftestInfo("Selftest performed: " + selftestPerformed);
 						} else if(cmd.startsWith(MSG_ASSISTANCE_EMPTY)) {
