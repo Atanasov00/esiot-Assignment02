@@ -22,7 +22,9 @@ class Task {
       timeElapsed = 0;
     }
 
-    virtual void init(){}
+    virtual void init(){
+      timeElapsed = 0;
+    }
     
     virtual void tick() = 0;
     
