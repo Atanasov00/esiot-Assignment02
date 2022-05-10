@@ -15,11 +15,7 @@ public class Test {
 			logger = new LogView();
 		});
 		
-		String portName = SerialPortList.getPortNames()[0];
-		for(String s: SerialPortList.getPortNames()) {
-			System.out.println(s);
-		}
-		Controller contr = new Controller(portName, view, logger);
+		Controller contr = new Controller(args[0], view, logger);
 		view.registerController(contr);
 	}
 }
