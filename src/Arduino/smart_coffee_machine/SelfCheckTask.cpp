@@ -38,6 +38,7 @@ void SelfCheckTask::tick(){
       Serial.println("Machine is doing a self-test...");
       lcd->getLcd().clear();
       lcd->print("Doing self test", 2, 1);
+      MsgService.sendMsg("cm:wk");
       selectionTask->setActive(false);
       userPresenceTask->setActive(false);
       startTime = millis();
@@ -69,6 +70,7 @@ void SelfCheckTask::tick(){
           MsgService.sendMsg("cm:tm");
           state = ASSISTANCE;
         } else {
+          MsgService.sendMsg("cm:dl");
           selectionTask->setActive(true);
           userPresenceTask->setActive(true);
           state = INIT;
