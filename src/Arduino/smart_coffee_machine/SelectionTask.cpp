@@ -142,7 +142,6 @@ void SelectionTask::init(){
 }
 
 void SelectionTask::tick(){
-  Serial.println("ready");
   switch(state){
     case READY:{
       if(allProductsEmpty()){
@@ -150,7 +149,6 @@ void SelectionTask::tick(){
         MsgService.sendMsg("cm:em");
         state = ASSISTANCE;
       } else {
-        Serial.println("Ready");
         lcd->getLcd().clear();
         lcd->print("Ready", 2, 1);
         checkIfAnyButtonPressed();

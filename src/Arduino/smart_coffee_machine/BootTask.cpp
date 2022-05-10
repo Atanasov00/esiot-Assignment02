@@ -38,7 +38,6 @@ void BootTask::tick(){
         break;
         case MESSAGE: {
           timeExp = millis();
-          Serial.println(timeExp - startTime);
           if(timeExp - startTime >= 2000){
             state = INITIALIZATION;
           }

@@ -20,9 +20,7 @@ void Scheduler::schedule() {
   timer.waitForNextTick();
   for(int i=0; i<nTasks; i++) {
     if(taskList[i]->isActive()){
-      if(taskList[i]->updateAndCheckTime(basePeriod)) {
         taskList[i]->tick();
-      }
     }
   }
 }

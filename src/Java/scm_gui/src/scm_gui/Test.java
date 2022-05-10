@@ -16,7 +16,9 @@ public class Test {
 		});
 		
 		String portName = SerialPortList.getPortNames()[0];
-		//System.out.println(portName);
+		for(String s: SerialPortList.getPortNames()) {
+			System.out.println(s);
+		}
 		Controller contr = new Controller(portName, view, logger);
 		view.registerController(contr);
 	}
