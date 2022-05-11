@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "Pot.h"
 #include "MsgService.h"
+#include "Logger.h"
 
 extern Drink* coffee;
 extern Drink* tea;
@@ -48,7 +49,7 @@ void SelectionTask::bUpPressed(){
     }
      break;
   }
-  Serial.println("You're selecting a " + currentDrink);
+  logger.log("You're selecting a " + currentDrink);
 }
 
 void SelectionTask::checkIfPotChanged(){
@@ -60,7 +61,7 @@ void SelectionTask::checkIfPotChanged(){
 
 void SelectionTask::potChanged(){
   sugarValue = pot->getValue();
-  Serial.println("You set the sugar level to " + String(sugarValue));
+  logger.log("Sugar level: " + String(sugarValue));
 }
 
 void SelectionTask::bDownPressed(){ 
@@ -81,43 +82,43 @@ void SelectionTask::bDownPressed(){
     }
      break;
   }
-  Serial.println("You're selecting a " + currentDrink);
+  logger.log("You're selecting a " + currentDrink);
 }
 
 void SelectionTask::checkIfMakingPressed(){
   if(bMake->isPressed()){
     if(currentDrink.equals("Coffee") && coffee->getQuantity() > 0){
-      Serial.println("Making a coffee...");
+      logger.log("Making a coffee...");
       state = START_MAKE;
       coffee->newProduct();
       MsgService.sendMsg("cm:wk");
       MsgService.sendMsg("cm:cfq:"+String(coffee->getQuantity()));
     } else if (currentDrink.equals("Coffee") && coffee->getQuantity() == 0){
-      Serial.println("Coffee is empty");
+      logger.log("Coffee is empty");
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Coffee is empty", 1, 1);
       time = millis();
     } else if(currentDrink.equals("Tea") && tea->getQuantity() > 0){
-      Serial.println("Making a tea...");
+      logger.log("Making a tea...");
       state = START_MAKE;
       tea->newProduct();
       MsgService.sendMsg("cm:wk");
       MsgService.sendMsg("cm:teq:"+String(tea->getQuantity()));
     } else if (currentDrink.equals("Tea") && tea->getQuantity() == 0) {
-      Serial.println("Tea is empty");
+      logger.log("Tea is empty");
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Tea is empty", 1, 1);
       time = millis();
     } else if(currentDrink.equals("Chocolate") && chocolate->getQuantity() > 0) {
-      Serial.println("Making a chocolate...");
+      logger.log("Making a chocolate...");
       state = START_MAKE;
       chocolate->newProduct();
       MsgService.sendMsg("cm:wk");
       MsgService.sendMsg("cm:chq:"+String(chocolate->getQuantity()));
     } else {
-      Serial.println("Chocolate is empty");
+      logger.log("Chocolate is empty");
       state = PRODUCT_EMPTY;
       lcd->getLcd().clear();
       lcd->print("Chocolate is empty", 1, 1);
@@ -182,9 +183,9 @@ void SelectionTask::tick(){
     }
     break;
     case START_MAKE: {
-      Serial.println("Coffee: " + String(coffee->getQuantity()));
-      Serial.println("Tea: " + String(tea->getQuantity()));
-      Serial.println("Chocolate: " + String(chocolate->getQuantity()));
+      logger.log("Coffee: " + String(coffee->getQuantity()));
+      logger.log("Tea: " + String(tea->getQuantity()));
+      logger.log("Chocolate: " + String(chocolate->getQuantity()));
       userPresenceTask->setActive(false);
       makingTask->setActive(true);
       selfCheckTask->setActive(false);

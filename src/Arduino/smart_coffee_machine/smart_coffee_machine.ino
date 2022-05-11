@@ -7,6 +7,7 @@
 #include "WaitingUserTask.h"
 #include "SelfCheckTask.h"
 #include "MsgService.h"
+#include "Logger.h"
 
 Scheduler scheduler;
 
@@ -19,8 +20,9 @@ Task* selfCheckTask;
 
 void setup() {
   scheduler.init(50);
+  MsgService.init();
 
-  Serial.begin(9600);
+  //Serial.begin(9600);
   Display* lcd = new Display();
 
   bootTask = new BootTask(lcd);

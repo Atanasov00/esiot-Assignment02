@@ -4,6 +4,7 @@
 #include "Config.h"
 #include "Display.h"
 #include "SelectionTask.h"
+#include "Logger.h"
 
 extern String currentDrink;
 ServoMotor* servo;
@@ -44,7 +45,7 @@ void MakingTask::tick() {
     }
     break;
     case READY: {
-      Serial.println("Preparation finished.");
+      logger.log("Preparation finished.");
       lcd->getLcd().clear();
       lcd->print("The "+ String(currentDrink), 1 , 1);
       lcd->print("is ready.", 1, 2);

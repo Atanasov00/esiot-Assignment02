@@ -7,6 +7,7 @@
 #include "SelectionTask.h"
 #include "UserPresenceTask.h"
 #include "MsgService.h"
+#include "Logger.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
@@ -25,17 +26,14 @@ void SelfCheckTask::init(){
 void SelfCheckTask::tick(){
   switch(state){
     case INIT: {
-      //Serial.println("SelfCheckTask");
       startTime = millis();
       state = WAITING;
     }
     break;
     case WAITING: {
-     //Serial.println("SelfCheckTask2");
      actualTime = millis();
-     //Serial.println(actualTime - startTime);
      if(actualTime - startTime >= T_CHECK){
-      Serial.println("Machine is doing a self-test...");
+      logger.log("Machine is doing a self-test...");
       lcd->getLcd().clear();
       lcd->print("Doing self test", 2, 1);
       MsgService.sendMsg("cm:wk");
@@ -61,9 +59,9 @@ void SelfCheckTask::tick(){
         servo->off();
         MsgService.sendMsg("cm:sf");
         temperature = temp->getTemperature();
-        Serial.println("Temperature is " + String(temperature) + "°C");
+        logger.log("Temperature is " + String(temperature) + "°C");
         if(temperature < TEMP_MIN || temperature > TEMP_MAX) {
-          Serial.println("Entering assistance mode (machine temperature is out of bounds..)");
+          logger.log("Entering assistance mode (machine temperature is out of bounds..)");
           lcd->getLcd().clear();
           lcd->print("Assistance Required.", 0, 1);
           MsgService.sendMsg("cm:ss");

@@ -14,6 +14,7 @@ public class MonitoringAgent extends Thread {
 	private int selftestPerformed;
 
 	static final String CM_PREFIX 	=  "cm:";
+	static final String LOG_PREFIX 	=  "lo:";
 	static final String IDLE_PREFIX = "dl";
 	static final String WORKING_PREFIX = "wk";
 	static final String ASSISTANCE_PREFIX = "ss";
@@ -67,11 +68,13 @@ public class MonitoringAgent extends Thread {
 						} else if(cmd.startsWith(MSG_ASSISTANCE_TEMP)) {
 							view.startTempMaintenance();
 						}
+					} else if (msg.startsWith(LOG_PREFIX)){
+						this.logger.log(msg.substring(LOG_PREFIX.length()));
 					}
 				}
-				} catch(Exception ex) {
-					ex.printStackTrace();
-				}
+			} catch(Exception ex) {
+				ex.printStackTrace();
 			}
+		}
 	}
 }

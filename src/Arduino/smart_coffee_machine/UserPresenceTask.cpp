@@ -2,6 +2,7 @@
 #include "Arduino.h"
 #include "Config.h"
 #include "Pir.h"
+#include "Logger.h"
 
 #include <avr/sleep.h>
 
@@ -25,17 +26,17 @@ void UserPresenceTask::tick(){
     case IDLE: {
       time = millis();
       if(!pir->isDetected() && time - startTime >= T_IDLE){
-        Serial.println("Going to sleep");
+        logger.log("Going to sleep");
         state = SLEEP;
       } else if(pir->isDetected()){
-        Serial.println("Switch to active");
+        logger.log("Switch to active");
         state = ACTIVE;
       }
     }
     break;
     case ACTIVE: {
       if(!pir->isDetected()){
-        Serial.println("Going to idle");
+        logger.log("Going to idle");
         state = IDLE;
         startTime = millis();
       }
@@ -49,12 +50,12 @@ void UserPresenceTask::tick(){
         set_sleep_mode(SLEEP_MODE_PWR_DOWN);
         sleep_enable();
         sleep_mode();
-        Serial.println("Wake up");
+        logger.log("Wake up");
         sleep_disable();
         detachInterrupt(PIR_PIN);
         lcd->getLcd().backlight();
         selectionTask->setActive(true);
-        Serial.println("Going active");
+        logger.log("Going active");
         state = ACTIVE;
     }
     break;

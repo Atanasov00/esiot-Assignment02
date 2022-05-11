@@ -5,6 +5,7 @@
 #include "SelectionTask.h"
 #include "ServoImpl.h"
 #include "MsgService.h"
+#include "Logger.h"
 
 extern Task* selectionTask;
 extern Task* userPresenceTask;
@@ -26,16 +27,15 @@ void WaitingUserTask::tick(){
     case INIT: {
       startTime = millis();
       state = WAITING;
-      Serial.println("Waiting for user...");
+      logger.log("Waiting for user...");
     }
     break;
     case WAITING: {
       time = millis();
-      //Serial.println(sonar->getDistance());
       if(time - startTime >= T_TIMEOUT || sonar->getDistance() >= 0.4){
-        Serial.println("Bye!");
-        Serial.println(time - startTime);
-        Serial.println(sonar->getDistance());
+        logger.log("Bye!");
+        logger.log("Time: " + String(time - startTime) + " ms");
+        logger.log("Distance: " + String(sonar->getDistance()) + " m");
         state = RESET;
       }
     }
